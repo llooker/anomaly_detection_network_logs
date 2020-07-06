@@ -126,7 +126,7 @@ view: outlier_data {
     description: "Various actions you can take on outliers"
     sql: "Actions..." ;;
     action: {
-      label: "Created Jira Ticket"
+      label: "Create Jira Ticket"
       icon_url: "https://cdn.worldvectorlogo.com/logos/jira-1.svg"
       url: "https://36eb5f27-30ab-4245-a28b-b08945733c96.trayapp.io"
     }
