@@ -106,7 +106,7 @@ view: outlier_data {
     type: date_second
     sql: MAX(${transaction_time_raw}) ;;
     convert_tz: no
-    html: <body style="font-size:11px"><p>Most recent <br>outlier occurred on<br><span style="color:DarkRed;font-weight:bold"> {{rendered_value | date: "%b %d, %Y" }}</span> <br>at <span style="color:DarkRed;font-weight:bold">{{rendered_value | date: "%T" }}</span>  </p></body> ;;
+    html: <body style="font-size:11px"><p>Most recent <br>anomaly occurred on<br><span style="color:DarkRed;font-weight:bold"> {{rendered_value | date: "%b %d, %Y" }}</span> <br>at <span style="color:DarkRed;font-weight:bold">{{rendered_value | date: "%T" }}</span>  </p></body> ;;
   }
 
   dimension: avg_rx_bytes_diff {
