@@ -121,8 +121,19 @@ view: outlier_data {
     sql: ${avg_tx_bytes} - ${normalized_centroid_data.avg_tx_bytes} ;;
   }
 
+  dimension: update_actions {
+    group_label: "Actions"
+    description: "Various actions you can take on outliers"
+    sql: "Actions..." ;;
+    action: {
+      label: "Created Jira Ticket"
+      icon_url: "https://cdn.worldvectorlogo.com/logos/jira-1.svg"
+      url: "https://36eb5f27-30ab-4245-a28b-b08945733c96.trayapp.io"
+    }
+  }
+
   measure: count {
     type: count
-    drill_fields: [transaction_time_second, normalized_centroid_data.centroid_id, dst_subnet, avg_rx_bytes, normalized_centroid_data.avg_rx_bytes, avg_tx_bytes, normalized_centroid_data.avg_tx_bytes]
+    drill_fields: [transaction_time_second, normalized_centroid_data.centroid_id, dst_subnet, avg_rx_bytes, normalized_centroid_data.avg_rx_bytes, avg_tx_bytes, normalized_centroid_data.avg_tx_bytes, update_actions]
   }
 }
