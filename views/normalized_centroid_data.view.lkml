@@ -8,11 +8,13 @@ view: normalized_centroid_data {
   }
 
   dimension: avg_rx_bytes {
+    label: "Avg Rx Bytes - Cluster"
     type: number
     sql: ${TABLE}.avg_rx_bytes ;;
   }
 
   dimension: avg_tx_bytes {
+    label: "Avg Tx Bytes - Cluster"
     type: number
     sql: ${TABLE}.avg_tx_bytes ;;
   }
