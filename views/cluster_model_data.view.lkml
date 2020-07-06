@@ -134,7 +134,7 @@ view: cluster_model_data {
   }
 
   measure: outlier_count {
-    label: "Event Anomaly Count"
+    label: "Outlier Count"
     type: count
     filters: [is_outlier: "Yes" ]
   }
