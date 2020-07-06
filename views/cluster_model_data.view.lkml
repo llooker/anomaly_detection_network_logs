@@ -110,7 +110,7 @@ view: cluster_model_data {
     # sql: TIMESTAMP(PARSE_DATE('%Y%m%d', REGEXP_EXTRACT(_TABLE_SUFFIX,r'\d\d\d\d\d\d\d\d'))) ;;
   }
 
-  dimension: is_outlier {
+  dimension: is_anomaly {
     type: yesno
     sql: CASE WHEN ${dst_subnet} = '12.0.1.3/22' AND ${avg_rx_bytes} >= 40000 AND ${avg_tx_bytes} >= 150000 THEN TRUE
               WHEN ${subscriber_id} = 'IMSI_TOKEN(64):AcZD2U2v//QiKkGzbFCm29pv5cqVi3Db09Z6CNt5cQSevBKRQvgdDfacPQIRY1dc' THEN TRUE
@@ -133,10 +133,9 @@ view: cluster_model_data {
     drill_fields: []
   }
 
-  measure: outlier_count {
-    label: "Outlier Count"
+  measure: anomaly_count {
     type: count
-    filters: [is_outlier: "Yes" ]
+    filters: [is_anomaly: "Yes" ]
   }
 
 
