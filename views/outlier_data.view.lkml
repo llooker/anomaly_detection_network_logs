@@ -10,11 +10,13 @@ view: outlier_data {
   dimension: avg_rx_bytes {
     type: number
     sql: ${TABLE}.avg_rx_bytes ;;
+    value_format_name: decimal_0
   }
 
   dimension: avg_tx_bytes {
     type: number
     sql: ${TABLE}.avg_tx_bytes ;;
+    value_format_name: decimal_0
   }
 
   dimension: centroid_id {
@@ -121,19 +123,85 @@ view: outlier_data {
     sql: ${avg_tx_bytes} - ${normalized_centroid_data.avg_tx_bytes} ;;
   }
 
-  dimension: update_actions {
+  dimension: actions {
     group_label: "Actions"
-    description: "Various actions you can take on outliers"
+    description: "Various actions you can take on anomalies"
     sql: "Actions..." ;;
     action: {
       label: "Create Jira Ticket"
       icon_url: "https://cdn.worldvectorlogo.com/logos/jira-1.svg"
       url: "https://36eb5f27-30ab-4245-a28b-b08945733c96.trayapp.io"
+      form_param: {
+        name: "Message"
+        type: textarea
+        default: "Hey,
+        Could you check out this anomaly. It occurred at {{ transaction_time_second._rendered_value | date: \"%T\" }} on {{ transaction_time_second._rendered_value | date: \"%b %d, %Y\" }}.
+        Subnet: {{ dst_subnet._value }}
+        Received Bytes: {{ outlier_data.avg_rx_bytes._rendered_value }}  vs. Average Received Bytes for Cluster: {{ normalized_centroid_data.avg_rx_bytes._rendered_value }}
+        Sent Bytes: {{ outlier_data.avg_tx_bytes._rendered_value }} vs. Average Sent Bytes for Cluster: {{ normalized_centroid_data.avg_tx_bytes._rendered_value }}
+"
+      }
+    }
+    action: {
+      label: "Text Security Consultant on Call"
+      url: "https://hooks.zapier.com/hooks/catch/1662138/tvc3zj/"
+      icon_url: "https://twilio-cms-prod.s3.amazonaws.com/original_images/twilio-mark-red.png"
+      param: {
+        name: "user_dash_link"
+        value: "https://googlecloud.looker.com/dashboards/559"
+      }
+      form_param: {
+        name: "Message"
+        type: textarea
+        default: "Hey,
+        Could you check out this anomaly. It occurred at {{ transaction_time_second._rendered_value | date: \"%T\" }} on {{ transaction_time_second._rendered_value | date: \"%b %d, %Y\" }}.
+        Subnet: {{ dst_subnet._value }}
+        Received Bytes: {{ outlier_data.avg_rx_bytes._rendered_value }}  vs. Average Received Bytes for Cluster: {{ normalized_centroid_data.avg_rx_bytes._rendered_value }}
+        Sent Bytes: {{ outlier_data.avg_tx_bytes._rendered_value }} vs. Average Sent Bytes for Cluster: {{ normalized_centroid_data.avg_tx_bytes._rendered_value }}
+        "
+        }
+      }
+    action: {
+      label: "Email Security Team"
+      url: "https://hooks.zapier.com/hooks/catch/1662138/tvc3zj/"
+      icon_url: "http://www.google.com/s2/favicons?domain=www.gmail.com"
+      param: {
+        name: "user_dash_link"
+        value: "https://googlecloud.looker.com/dashboards/559"
+      }
+      form_param: {
+        name: "Message"
+        type: textarea
+        default: "Hey,
+        Could you check out this anomaly. It occurred at {{ transaction_time_second._rendered_value | date: \"%T\" }} on {{ transaction_time_second._rendered_value | date: \"%b %d, %Y\" }}.
+        Subnet: {{ dst_subnet._value }}
+        Received Bytes: {{ outlier_data.avg_rx_bytes._rendered_value }}  vs. Average Received Bytes for Cluster: {{ normalized_centroid_data.avg_rx_bytes._rendered_value }}
+        Sent Bytes: {{ outlier_data.avg_tx_bytes._rendered_value }} vs. Average Sent Bytes for Cluster: {{ normalized_centroid_data.avg_tx_bytes._rendered_value }}
+        "
+      }
+      form_param: {
+        name: "Recipient"
+        type: select
+        default: "cody"
+        option: {
+          name: "cody"
+          label: "Cody"
+        }
+        option: {
+          name: "masud"
+          label: "Masud"
+        }
+        option: {
+          name: "google_security"
+          label: "Google Security Group"
+        }
+      }
     }
   }
 
+
   measure: count {
     type: count
-    drill_fields: [transaction_time_second, normalized_centroid_data.centroid_id, dst_subnet, avg_rx_bytes, normalized_centroid_data.avg_rx_bytes, avg_tx_bytes, normalized_centroid_data.avg_tx_bytes, update_actions]
+    drill_fields: [transaction_time_second, normalized_centroid_data.centroid_id, dst_subnet, avg_rx_bytes, normalized_centroid_data.avg_rx_bytes, avg_tx_bytes, normalized_centroid_data.avg_tx_bytes, actions]
   }
 }
