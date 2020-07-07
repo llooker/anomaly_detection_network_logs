@@ -27,6 +27,12 @@ view: outlier_data {
   dimension: dst_subnet {
     type: string
     sql: ${TABLE}.dst_subnet ;;
+#     link: {
+#       label: "{{ value }} Lookup"
+#       icon_url: "https://www.looker.com/favicon.ico"
+#       url: "/dashboards/606?Subnet={{ value | encode_uri }}"
+#     }
+
   }
 
   dimension: max_duration {
