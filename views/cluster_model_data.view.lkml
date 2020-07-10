@@ -20,6 +20,11 @@ view: cluster_model_data {
   dimension: dst_subnet {
     type: string
     sql: ${TABLE}.dst_subnet ;;
+#     link: {
+#       label: "{{ value }} Lookup"
+#       icon_url: "https://www.looker.com/favicon.ico"
+#       url: "/dashboards/606?Subnet={{ value | encode_uri }}"
+#     }
   }
 
   dimension: max_duration {
@@ -120,6 +125,7 @@ view: cluster_model_data {
 
   dimension: is_nefarious_subscriber_id {
     group_label: "Risk Factors"
+    hidden: yes
     type: yesno
     sql: ${subscriber_id} in ('IMSI_TOKEN(64):AcZD2U2v//QiKkGzbFCm29pv5cqVi3Db09Z6CNt5cQSevBKRQvgdDfacPQIRY1dc',
                               'IMSI_TOKEN(48):AWyeZR8BCphFmlZ1Ht1Y5FnHRgOozmfBdfE6/Cq8u5is3g==',
@@ -137,6 +143,7 @@ view: cluster_model_data {
 
   dimension: is_nefarious_subnet {
     group_label: "Risk Factors"
+    hidden: yes
     type: yesno
     sql: ${dst_subnet} in ('12.0.1.3/22');;
   }
@@ -149,7 +156,7 @@ view: cluster_model_data {
   }
 
   dimension: is_large_file_sent {
-    group_label: "Risk Factors"
+    group_label: "Anomaly Factors"
     type: yesno
     sql: ${avg_tx_bytes} > 100000 ;;
   }
@@ -162,7 +169,7 @@ view: cluster_model_data {
   }
 
   dimension: is_large_file_received {
-    group_label: "Risk Factors"
+    group_label: "Anomaly Factors"
     type: yesno
     sql: ${avg_rx_bytes} > 30000 ;;
   }
@@ -186,6 +193,7 @@ view: cluster_model_data {
   }
 
   measure: events_1_risk_factor  {
+    hidden: yes
     type: count
     filters: [has_1_risk_factor: "yes"]
   }
@@ -206,6 +214,7 @@ view: cluster_model_data {
   }
 
   measure: events_2_risk_factor  {
+    hidden: yes
     type: count
     filters: [has_2_risk_factor: "yes"]
   }
@@ -222,6 +231,7 @@ view: cluster_model_data {
   }
 
   measure: events_3_risk_factor  {
+    hidden: yes
     type: count
     filters: [has_3_risk_factor: "yes"]
   }
@@ -234,6 +244,7 @@ view: cluster_model_data {
   }
 
   measure: events_4_risk_factor  {
+    hidden: yes
     type: count
     filters: [has_4_risk_factor: "yes"]
   }
