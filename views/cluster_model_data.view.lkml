@@ -78,6 +78,7 @@ view: cluster_model_data {
       raw,
       second,
       minute,
+      time,
       hour,
       date,
       day_of_week,
