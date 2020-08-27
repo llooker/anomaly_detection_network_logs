@@ -3,6 +3,7 @@ view: netflow_log_raw_data {
     ;;
 
   dimension_group: event {
+    hidden: yes
     type: time
     timeframes: [
       raw,
@@ -34,9 +35,10 @@ view: netflow_log_raw_data {
     sql: ${TABLE}.dstPort ;;
   }
 
-  dimension: end_time {
-    type: number
-    sql: ${TABLE}.endTime ;;
+  dimension_group: end_time {
+    type: time
+    timeframes: [raw, date, time, millisecond, month, year, week]
+    sql: TIMESTAMP_MILLIS(cast(${TABLE}.endTime AS INT64))  ;;
   }
 
   dimension: protocol_name {
@@ -64,9 +66,10 @@ view: netflow_log_raw_data {
     sql: ${TABLE}.srcPort ;;
   }
 
-  dimension: start_time {
-    type: number
-    sql: ${TABLE}.startTime ;;
+  dimension_group: start_time {
+    type: time
+    timeframes: [raw, date, time, millisecond, month, year, week]
+    sql: TIMESTAMP_MILLIS(cast(${TABLE}.startTime  AS INT64))  ;;
   }
 
   dimension: subscriber_id {
