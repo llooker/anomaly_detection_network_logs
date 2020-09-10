@@ -1,7 +1,6 @@
 - dashboard: security_analytics__anomaly_detection
   title: Security Analytics & Anomaly Detection
   layout: newspaper
-  preferred_viewer: dashboards-next
   elements:
   - name: "<b>How do we make sense of this data and ensure our org is safe?</b>"
     type: text
