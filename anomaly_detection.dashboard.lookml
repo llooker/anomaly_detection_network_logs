@@ -24,7 +24,7 @@
     height: 3
   - title: Anomalies Today
     name: Anomalies Today
-    model: anomaly_detection
+    model: anomaly_detection_fork
     explore: outlier_data
     type: single_value
     fields: [outlier_data.count, outlier_data.transaction_time_date]
@@ -84,7 +84,7 @@
     height: 6
   - title: Anomaly Details
     name: Anomaly Details
-    model: anomaly_detection
+    model: anomaly_detection_fork
     explore: outlier_data
     type: looker_grid
     fields: [outlier_data.transaction_time_second, outlier_data.dst_subnet, outlier_data.avg_rx_bytes,
@@ -144,7 +144,7 @@
     height: 6
   - title: Total Network Traffic Events
     name: Total Network Traffic Events
-    model: anomaly_detection
+    model: anomaly_detection_fork
     explore: cluster_model_data
     type: single_value
     fields: [cluster_model_data.count]
@@ -495,7 +495,7 @@
   - name: Events and Anomalies
     title: Events and Anomalies
     merged_queries:
-    - model: anomaly_detection
+    - model: anomaly_detection_fork
       explore: outlier_data
       type: looker_scatter
       fields: [outlier_data.count, outlier_data.transaction_time_date]
