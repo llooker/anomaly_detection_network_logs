@@ -1,5 +1,5 @@
 view: outlier_data {
-  sql_table_name: `network_logs.outlier_data`
+  sql_table_name: `network_logs.outlier_data_new`
     ;;
 
   dimension: avg_duration {
@@ -92,6 +92,7 @@ view: outlier_data {
       second,
       minute,
       hour,
+      hour6,
       date,
       day_of_week,
       week,

@@ -71,7 +71,7 @@ view: netflow_log_raw_data {
   dimension_group: start_time {
     label: "Connection Start"
     type: time
-    timeframes: [raw, date, time]
+    timeframes: [raw, date, time, hour_of_day, hour, minute15, hour6]
     sql: TIMESTAMP_MILLIS(cast(${TABLE}.startTime  AS INT64))  ;;
   }
 
