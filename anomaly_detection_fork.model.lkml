@@ -2,13 +2,9 @@ connection: "security_logs_next2020"
 
 # include all the views
 include: "/views/**/*.view"
+include: "*.dashboard"
 
-datagroup: anomaly_detection_default_datagroup {
-  # sql_trigger: SELECT MAX(id) FROM etl_log;;
-  max_cache_age: "1 hour"
-}
 
-persist_with: anomaly_detection_default_datagroup
 
 explore: cluster_model_data {
   label: "Netflow Events"
@@ -46,6 +42,10 @@ explore: outlier_data {
 }
 
 explore: netflow_log_raw_data {
+  persist_with: real_time
+  always_filter: {
+    filters: [netflow_log_raw_data.partition_date: "last 7 days"]
+  }
 
 #  join: src_ip_geo {
 #   from: ip_to_geography_lookup
@@ -58,7 +58,14 @@ explore: netflow_log_raw_data {
 }
 
 
-datagroup: ip_lookup {
+datagroup: static {
   max_cache_age: "350 hours"
   sql_trigger: select 1 ;;
+}
+
+persist_with: static
+
+datagroup: real_time {
+  # sql_trigger: SELECT MAX(id) FROM etl_log;;
+  max_cache_age: "0 hours"
 }

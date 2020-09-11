@@ -1,5 +1,5 @@
-view: normalized_centroid_data {
-  sql_table_name: `network_logs.normalized_centroid_data`
+view: normalized_centroid_data_demo {
+  sql_table_name: `next-demo-2020.network_logs.normalized_centroid_data_demo`
     ;;
 
   dimension: avg_duration {
@@ -8,13 +8,11 @@ view: normalized_centroid_data {
   }
 
   dimension: avg_rx_bytes {
-    label: "Avg Rx Bytes - Cluster"
     type: number
     sql: ${TABLE}.avg_rx_bytes ;;
   }
 
   dimension: avg_tx_bytes {
-    label: "Avg Tx Bytes - Cluster"
     type: number
     sql: ${TABLE}.avg_tx_bytes ;;
   }

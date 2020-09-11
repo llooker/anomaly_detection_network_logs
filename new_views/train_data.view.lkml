@@ -1,5 +1,5 @@
-view: normalized_centroid_data {
-  sql_table_name: `network_logs.normalized_centroid_data`
+view: train_data {
+  sql_table_name: `next-demo-2020.network_logs.train_data`
     ;;
 
   dimension: avg_duration {
@@ -8,20 +8,18 @@ view: normalized_centroid_data {
   }
 
   dimension: avg_rx_bytes {
-    label: "Avg Rx Bytes - Cluster"
     type: number
     sql: ${TABLE}.avg_rx_bytes ;;
   }
 
   dimension: avg_tx_bytes {
-    label: "Avg Tx Bytes - Cluster"
     type: number
     sql: ${TABLE}.avg_tx_bytes ;;
   }
 
-  dimension: centroid_id {
-    type: number
-    sql: ${TABLE}.centroid_id ;;
+  dimension: dst_subnet {
+    type: string
+    sql: ${TABLE}.dst_subnet ;;
   }
 
   dimension: max_duration {
@@ -54,14 +52,29 @@ view: normalized_centroid_data {
     sql: ${TABLE}.min_tx_bytes ;;
   }
 
-  dimension: normalized_dest {
-    type: number
-    sql: ${TABLE}.normalized_dest ;;
-  }
-
   dimension: number_of_records {
     type: number
     sql: ${TABLE}.number_of_records ;;
+  }
+
+  dimension: number_of_unique_ips {
+    type: number
+    sql: ${TABLE}.number_of_unique_ips ;;
+  }
+
+  dimension: number_of_unique_ports {
+    type: number
+    sql: ${TABLE}.number_of_unique_ports ;;
+  }
+
+  dimension: subscriber_id {
+    type: string
+    sql: ${TABLE}.subscriber_id ;;
+  }
+
+  dimension: transaction_time {
+    type: string
+    sql: ${TABLE}.transaction_time ;;
   }
 
   measure: count {

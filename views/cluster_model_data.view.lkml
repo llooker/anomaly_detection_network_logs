@@ -1,5 +1,5 @@
 view: cluster_model_data {
-  sql_table_name: `anomaly_detection.cluster_model_data`
+  sql_table_name: `network_logs.cluster_model_data`
     ;;
 
   dimension: avg_duration {
