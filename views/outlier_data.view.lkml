@@ -7,10 +7,23 @@ view: outlier_data {
     sql: ${TABLE}.avg_duration ;;
   }
 
+  dimension: avg_duration_diff {
+    group_label: "Differences from Normal (Centroid)"
+    type: number
+    sql: ${avg_duration} - ${normalized_centroid_data.avg_duration} ;;
+  }
+
   dimension: avg_rx_bytes {
     type: number
     sql: ${TABLE}.avg_rx_bytes ;;
     value_format_name: decimal_0
+  }
+
+  dimension: avg_rx_bytes_diff {
+    label: "Rx Differece from Centroid Avg"
+    group_label: "Differences from Normal (Centroid)"
+    type: number
+    sql: ${avg_rx_bytes} - ${normalized_centroid_data.avg_rx_bytes} ;;
   }
 
   dimension: avg_tx_bytes {
@@ -19,25 +32,46 @@ view: outlier_data {
     value_format_name: decimal_0
   }
 
+  dimension: avg_tx_bytes_diff {
+    label: "Tx Difference from Centroid Avg"
+    group_label: "Differences from Normal (Centroid)"
+    type: number
+    sql: ${avg_tx_bytes} - ${normalized_centroid_data.avg_tx_bytes} ;;
+  }
+
   dimension: centroid_id {
     type: number
     sql: ${TABLE}.centroid_id ;;
   }
 
   dimension: dst_subnet {
+    label: "Source Subnet"
     type: string
-    sql: ${TABLE}.dst_subnet ;;
-#     link: {
-#       label: "{{ value }} Lookup"
-#       icon_url: "https://www.looker.com/favicon.ico"
-#       url: "/dashboards/606?Subnet={{ value | encode_uri }}"
-#     }
+    # logic to simulate traffic coming from Russia for demo purposes only
+    sql: CASE WHEN ${TABLE}.dst_subnet like '12.0.%'
+         THEN REPLACE( ${TABLE}.dst_subnet , '12.0.', '109.107.')
+          ELSE ${TABLE}.dst_subnet END  ;;
+    link: {
+      label: "Subnet Lookup"
+      icon_url: "https://www.looker.com/favicon.ico"
+      url: "/dashboards-next/747?Subnet={{ value | encode_uri }}"
+    }
 
   }
+
+
+
+
 
   dimension: max_duration {
     type: number
     sql: ${TABLE}.max_duration ;;
+  }
+
+  dimension: max_duration_diff {
+    group_label: "Differences from Normal (Centroid)"
+    type: number
+    sql: ${max_duration} - ${normalized_centroid_data.max_duration} ;;
   }
 
   dimension: max_rx_bytes {
@@ -45,14 +79,32 @@ view: outlier_data {
     sql: ${TABLE}.max_rx_bytes ;;
   }
 
+  dimension: max_rx_bytes_diff {
+    group_label: "Differences from Normal (Centroid)"
+    type: number
+    sql: ${max_rx_bytes} - ${normalized_centroid_data.max_rx_bytes} ;;
+  }
+
   dimension: max_tx_bytes {
     type: number
     sql: ${TABLE}.max_tx_bytes ;;
   }
 
+  dimension: max_tx_bytes_diff {
+    group_label: "Differences from Normal (Centroid)"
+    type: number
+    sql: ${max_tx_bytes} - ${normalized_centroid_data.max_tx_bytes} ;;
+  }
+
   dimension: min_duration {
     type: number
     sql: ${TABLE}.min_duration ;;
+  }
+
+  dimension: min_duration_diff {
+    group_label: "Differences from Normal (Centroid)"
+    type: number
+    sql: ${min_duration} - ${normalized_centroid_data.min_duration} ;;
   }
 
   dimension: min_rx_bytes {
@@ -86,6 +138,7 @@ view: outlier_data {
   }
 
   dimension_group: transaction_time {
+    label: "Event"
     type: time
     timeframes: [
       raw,
@@ -106,10 +159,12 @@ view: outlier_data {
     convert_tz: no
   }
 
-#   measure: most_recent_outlier_time {
-#     type: date_second
-#     sql: MAX(${transaction_time_raw}) ;;
-#   }
+  dimension: timestamp_string {
+    hidden: yes
+    type: string
+    sql: SUBSTR(CAST(${transaction_time_time} AS STRING), STRPOS(CAST(${transaction_time_time} AS STRING), ' '), 9);;
+    html: {{ outlier_data.transaction_time_date._value }}<br>{{ value }} ;;
+  }
 
   measure: most_recent_outlier_date {
     type: date_second
@@ -118,16 +173,35 @@ view: outlier_data {
     html: <body style="font-size:11px"><p>Most recent <br>anomaly occurred on<br><span style="color:DarkRed;font-weight:bold"> {{rendered_value | date: "%b %d, %Y" }}</span> <br>at <span style="color:DarkRed;font-weight:bold">{{rendered_value | date: "%T" }}</span>  </p></body> ;;
   }
 
-  dimension: avg_rx_bytes_diff {
-    label: "Rx Differece from Centroid Avg"
+
+dimension: source_country {
+  # logic to simulate traffic coming from Russia for demo purposes only
+  sql: CASE WHEN ${TABLE}.dst_subnet like '12.0.%' THEN 'Russia' ELSE 'United States' END  ;;
+}
+
+  dimension: source_lat {
     type: number
-    sql: ${avg_rx_bytes} - ${normalized_centroid_data.avg_rx_bytes} ;;
+    hidden: yes
+    # logic to simulate traffic coming from Russia for demo purposes only
+    sql: CASE WHEN ${TABLE}.dst_subnet like '12.0.%' THEN 56.0 ELSE 39.0 END  ;;
   }
 
-  dimension: avg_tx_bytes_diff {
-    label: "Tx Difference from Centroid Avg"
+  dimension: source_lng {
     type: number
-    sql: ${avg_tx_bytes} - ${normalized_centroid_data.avg_tx_bytes} ;;
+    hidden: yes
+    # logic to simulate traffic coming from Russia for demo purposes only
+    sql: CASE WHEN ${TABLE}.dst_subnet like '12.0.%' THEN 38.0 ELSE -77.0 END  ;;
+  }
+
+  dimension: source_location {
+    type: location
+    sql_latitude: ${source_lat} ;;
+    sql_longitude: ${source_lng} ;;
+  }
+
+  dimension: is_risky_country {
+    type: yesno
+    sql: ${source_country} IN ('Russia', 'China', 'North Korea', 'Iran') ;;
   }
 
   dimension: actions {
