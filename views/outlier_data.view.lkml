@@ -144,6 +144,9 @@ view: outlier_data {
       raw,
       second,
       minute,
+      minute10,
+      minute15,
+      minute30,
       hour,
       hour6,
       date,
@@ -282,7 +285,14 @@ dimension: source_country {
 
 
   measure: count {
+    hidden: yes
     type: count
+    drill_fields: [transaction_time_second, normalized_centroid_data.centroid_id, dst_subnet, avg_rx_bytes, normalized_centroid_data.avg_rx_bytes, avg_tx_bytes, normalized_centroid_data.avg_tx_bytes, actions]
+  }
+
+  measure: anomaly_count {
+    type: number
+    sql: round(${count} / 3000) ;;
     drill_fields: [transaction_time_second, normalized_centroid_data.centroid_id, dst_subnet, avg_rx_bytes, normalized_centroid_data.avg_rx_bytes, avg_tx_bytes, normalized_centroid_data.avg_tx_bytes, actions]
   }
 }

@@ -111,13 +111,13 @@ view: netflow_log_raw_data {
   }
 
   dimension: latitude {
-    hidden: yes
+    # hidden: yes
     type: number
     sql: ${TABLE}.latitude ;;
   }
 
   dimension: longitude {
-    hidden: yes
+    # hidden: yes
     type: number
     sql: ${TABLE}.longitude ;;
   }
@@ -138,6 +138,6 @@ view: netflow_log_raw_data {
 
   measure: count {
     type: count
-    drill_fields: [protocol_name]
+    drill_fields: [partition_time, geo_country, src_ip, src_port, dst_ip, dst_port, bytes_transferred]
   }
 }
