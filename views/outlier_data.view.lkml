@@ -213,7 +213,6 @@ view: outlier_data {
       time
     ]
     sql: CAST(${TABLE}.transaction_time AS TIMESTAMP) ;;
-    convert_tz: no
   }
 
   dimension: timestamp_string {
