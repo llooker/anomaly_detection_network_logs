@@ -13,6 +13,23 @@ view: outlier_data {
     sql: ${avg_duration} - ${normalized_centroid_data.avg_duration} ;;
   }
 
+  dimension: avg_duration_diff_pct {
+    group_label: "Differences from Normal (Centroid)"
+    type: number
+    sql: abs((${avg_duration} - ${normalized_centroid_data.avg_duration}) / nullif(${normalized_centroid_data.avg_duration},0)) ;;
+   }
+
+  dimension: duration_anomaly {
+    group_label: "Is Anomaly?"
+    type: yesno
+    sql: abs(${avg_duration_diff_pct}) >= 1.0  ;;
+    html:  {% if value == 'No' %}
+    <p style="color: white; background-color: green; font-size:100%; text-align:center">{{ value }}</p>
+    {% else %}
+     <p style="color: white; background-color: red; font-size:100%; text-align:center">Duration</p>
+    {% endif %};;
+  }
+
   dimension: avg_rx_bytes {
     type: number
     sql: ${TABLE}.avg_rx_bytes ;;
@@ -26,6 +43,24 @@ view: outlier_data {
     sql: ${avg_rx_bytes} - ${normalized_centroid_data.avg_rx_bytes} ;;
   }
 
+  dimension: avg_rx_bytes_diff_pct {
+    group_label: "Differences from Normal (Centroid)"
+    type: number
+    sql: abs((${avg_rx_bytes} - ${normalized_centroid_data.avg_rx_bytes}) / nullif(${normalized_centroid_data.avg_rx_bytes},0)) ;;
+  }
+
+  dimension: rx_bytes_anomaly {
+    group_label: "Is Anomaly?"
+    type: yesno
+    sql: abs(${avg_rx_bytes_diff_pct}) > 50.0  ;;
+    html:  {% if value == 'No' %}
+          <div style="color: white; background-color: green; font-size:100%; text-align:center">{{ value }}</div>
+          {% else %}
+           <div style="color: white; background-color: red; font-size:100%; text-align:center">Bytes Rx</div>
+          {% endif %};;
+  }
+
+
   dimension: avg_tx_bytes {
     type: number
     sql: ${TABLE}.avg_tx_bytes ;;
@@ -37,6 +72,23 @@ view: outlier_data {
     group_label: "Differences from Normal (Centroid)"
     type: number
     sql: ${avg_tx_bytes} - ${normalized_centroid_data.avg_tx_bytes} ;;
+  }
+
+  dimension: avg_tx_bytes_diff_pct {
+    group_label: "Differences from Normal (Centroid)"
+    type: number
+    sql: (${avg_tx_bytes} - ${normalized_centroid_data.avg_tx_bytes}) / ${normalized_centroid_data.avg_tx_bytes} ;;
+  }
+
+  dimension: tx_bytes_anomaly {
+    group_label: "Is Anomaly?"
+    type: yesno
+    sql: abs(${avg_tx_bytes_diff_pct}) > 50.0  ;;
+    html:  {% if value == 'No' %}
+    <div style="color: white; background-color: green; font-size:100%; text-align:center">{{ value }}</div>
+    {% else %}
+    <div style="color: white; background-color: red; font-size:100%; text-align:center">Bytes Tx</div>
+    {% endif %};;
   }
 
   dimension: centroid_id {
@@ -73,6 +125,8 @@ view: outlier_data {
     type: number
     sql: ${max_duration} - ${normalized_centroid_data.max_duration} ;;
   }
+
+
 
   dimension: max_rx_bytes {
     type: number

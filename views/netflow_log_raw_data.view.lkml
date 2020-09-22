@@ -41,11 +41,13 @@ view: netflow_log_raw_data {
   }
 
   dimension: protocol_name {
+    label: "Protocol Type"
     type: string
     sql: UPPER(${TABLE}.protocolName) ;;
   }
 
   dimension: protocol_number {
+    hidden: yes
     type: number
     sql: ${TABLE}.protocolNumber ;;
   }
@@ -137,6 +139,7 @@ view: netflow_log_raw_data {
   }
 
   measure: count {
+    label: "Event Count"
     type: count
     drill_fields: [partition_time, geo_country, src_ip, src_port, dst_ip, dst_port, bytes_transferred]
   }
