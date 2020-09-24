@@ -14,6 +14,7 @@ view: outlier_data {
   }
 
   dimension: avg_duration_diff_pct {
+    hidden: yes
     group_label: "Differences from Normal (Centroid)"
     type: number
     sql: abs((${avg_duration} - ${normalized_centroid_data.avg_duration}) / nullif(${normalized_centroid_data.avg_duration},0)) ;;
@@ -23,6 +24,9 @@ view: outlier_data {
     group_label: "Is Anomaly?"
     type: yesno
     sql: abs(${avg_duration_diff_pct}) >= 1.0  ;;
+    # for demo purpose we've hard coded this
+    # arbitrary threshold, but in reality this
+    # would be based off of STDDEV
     html:  {% if value == 'No' %}
     <p style="color: white; background-color: green; font-size:100%; text-align:center">{{ value }}</p>
     {% else %}
@@ -44,6 +48,7 @@ view: outlier_data {
   }
 
   dimension: avg_rx_bytes_diff_pct {
+    hidden: yes
     group_label: "Differences from Normal (Centroid)"
     type: number
     sql: abs((${avg_rx_bytes} - ${normalized_centroid_data.avg_rx_bytes}) / nullif(${normalized_centroid_data.avg_rx_bytes},0)) ;;
@@ -53,6 +58,9 @@ view: outlier_data {
     group_label: "Is Anomaly?"
     type: yesno
     sql: abs(${avg_rx_bytes_diff_pct}) > 50.0  ;;
+    # for demo purpose we've hard coded this
+    # arbitrary threshold, but in reality this
+    # would be based off of STDDEV
     html:  {% if value == 'No' %}
           <div style="color: white; background-color: green; font-size:100%; text-align:center">{{ value }}</div>
           {% else %}
@@ -75,6 +83,7 @@ view: outlier_data {
   }
 
   dimension: avg_tx_bytes_diff_pct {
+    hidden: yes
     group_label: "Differences from Normal (Centroid)"
     type: number
     sql: (${avg_tx_bytes} - ${normalized_centroid_data.avg_tx_bytes}) / ${normalized_centroid_data.avg_tx_bytes} ;;
@@ -84,6 +93,9 @@ view: outlier_data {
     group_label: "Is Anomaly?"
     type: yesno
     sql: abs(${avg_tx_bytes_diff_pct}) > 50.0  ;;
+    # for demo purpose we've hard coded this
+    # arbitrary threshold, but in reality this
+    # would be based off of STDDEV
     html:  {% if value == 'No' %}
     <div style="color: white; background-color: green; font-size:100%; text-align:center">{{ value }}</div>
     {% else %}
@@ -112,9 +124,6 @@ view: outlier_data {
   }
 
 
-
-
-
   dimension: max_duration {
     type: number
     sql: ${TABLE}.max_duration ;;
@@ -125,7 +134,6 @@ view: outlier_data {
     type: number
     sql: ${max_duration} - ${normalized_centroid_data.max_duration} ;;
   }
-
 
 
   dimension: max_rx_bytes {
@@ -346,6 +354,9 @@ dimension: source_country {
   measure: anomaly_count {
     type: number
     sql: round(${count} / 3000) ;;
+    # for demo purposes, we are making the
+    # count much smaller than the data that
+    # is being generated
     drill_fields: [transaction_time_second, normalized_centroid_data.centroid_id, dst_subnet, avg_rx_bytes, normalized_centroid_data.avg_rx_bytes, avg_tx_bytes, normalized_centroid_data.avg_tx_bytes, actions]
   }
 }
