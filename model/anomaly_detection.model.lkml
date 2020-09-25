@@ -2,7 +2,7 @@ connection: "security_logs_next2020"
 
 # include all the views
 include: "/views/**/*.view"
-#include: "*.dashboard"
+include: "/dashboards/*.dashboard"
 
 
 explore: cluster_model_data {
