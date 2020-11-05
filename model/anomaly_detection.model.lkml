@@ -1,4 +1,4 @@
-connection: "security_logs_next2020"
+connection: "thelook_daily_updates"
 
 # include all the views
 include: "/views/**/*.view"

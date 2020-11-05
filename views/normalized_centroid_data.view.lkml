@@ -1,5 +1,5 @@
 view: normalized_centroid_data {
-  sql_table_name: `network_logs.normalized_centroid_data`
+  sql_table_name: `anomaly_detection.normalized_centroid_data`
     ;;
 
   dimension: avg_duration {
