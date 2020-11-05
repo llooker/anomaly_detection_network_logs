@@ -1,6 +1,6 @@
 view: netflow_log_raw_data {
-  sql_table_name: `anomaly_detection.netflow_log_raw_data`
-    ;;
+  sql_table_name: next-demo-2020.network_logs.netflow_log_raw_data_new ;;
+  #sql_table_name: `anomaly_detection.netflow_log_raw_data`;;
 
   dimension_group: partition {
     type: time

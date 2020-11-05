@@ -1,6 +1,6 @@
 view: outlier_data {
-  sql_table_name: `anomaly_detection.outlier_data`
-    ;;
+  sql_table_name: `network_logs.outlier_data_new`
+  #sql_table_name: `anomaly_detection.outlier_data` ;;
 
   dimension: avg_duration {
     type: number
