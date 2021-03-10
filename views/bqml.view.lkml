@@ -22,6 +22,6 @@ view: k_means_cluster {
       CREATE OR REPLACE MODEL `looker-private-demo.anomaly_detection.log_cluster`
       OPTIONS(model_type='kmeans',num_clusters=4, standardize_features = true) AS
       SELECT *
-      FROM k_means_inputs ;;
+      FROM ${k_means_inputs.SQL_TABLE_NAME} ;;
   }
 }

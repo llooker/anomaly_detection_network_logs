@@ -1,5 +1,5 @@
 view: netflow_log_raw_data {
-  sql_table_name: next-demo-2020.network_logs.netflow_log_raw_data_new ;;
+  sql_table_name: netflow_log_data ;;
   #sql_table_name: `anomaly_detection.netflow_log_raw_data`;;
 
   dimension_group: partition {
@@ -8,6 +8,7 @@ view: netflow_log_raw_data {
       raw,
       second,
       minute,
+      minute10,
       time,
       hour,
       date,
@@ -73,7 +74,7 @@ view: netflow_log_raw_data {
   dimension_group: start_time {
     label: "Connection Start"
     type: time
-    timeframes: [raw, date, time, hour_of_day, hour, minute15, hour6]
+    timeframes: [raw, minute, date, time, hour_of_day, hour, minute15, hour6]
     sql: TIMESTAMP_MILLIS(cast(${TABLE}.startTime  AS INT64))  ;;
   }
 
@@ -141,6 +142,18 @@ view: netflow_log_raw_data {
   measure: count {
     label: "Event Count"
     type: count
+    drill_fields: [partition_time, geo_country, src_ip, src_port, dst_ip, dst_port, bytes_transferred]
+  }
+
+  measure: count_source_ips {
+    type: count_distinct
+    sql: ${src_ip} ;;
+    drill_fields: [partition_time, geo_country, src_ip, src_port, dst_ip, dst_port, bytes_transferred]
+  }
+
+  measure: count_dest_ips {
+    type: count_distinct
+    sql: ${dst_ip} ;;
     drill_fields: [partition_time, geo_country, src_ip, src_port, dst_ip, dst_port, bytes_transferred]
   }
 }
