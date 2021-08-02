@@ -1,6 +1,4 @@
 connection: "ds-demo-anomaly-detection"
-#thelook_daily_updates
-
 # include all the views
 include: "/views/**/*.view"
 include: "/dashboards/*.dashboard"

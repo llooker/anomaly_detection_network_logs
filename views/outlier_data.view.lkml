@@ -1,6 +1,6 @@
 view: outlier_data {
-  sql_table_name: `network_logs.outlier_data_new`;;
-  #sql_table_name: `anomaly_detection.outlier_data` ;;
+  #sql_table_name: `network_logs.outlier_data_new`;;
+  sql_table_name: `anomaly_detection.outlier_data` ;;
 
   dimension: avg_duration {
     type: number
@@ -357,6 +357,6 @@ dimension: source_country {
     # for demo purposes, we are making the
     # count much smaller than the data that
     # is being generated
-    drill_fields: [transaction_time_second, normalized_centroid_data.centroid_id, dst_subnet, avg_rx_bytes, normalized_centroid_data.avg_rx_bytes, avg_tx_bytes, normalized_centroid_data.avg_tx_bytes, actions]
+    drill_fields: [transaction_time_second, dst_subnet, duration_anomaly, rx_bytes_anomaly, tx_bytes_anomaly, actions]
   }
 }
