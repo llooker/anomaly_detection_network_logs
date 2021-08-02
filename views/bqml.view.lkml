@@ -19,7 +19,7 @@ view: k_means_cluster {
   derived_table: {
     datagroup_trigger: once_weekly
     sql_create:
-      CREATE OR REPLACE MODEL `looker-private-demo.anomaly_detection.log_cluster`
+      CREATE OR REPLACE MODEL `pawanrana-ce-demos.demoanalyticsds.log_cluster`
       OPTIONS(model_type='kmeans',num_clusters=4, standardize_features = true) AS
       SELECT *
       FROM k_means_inputs ;;
