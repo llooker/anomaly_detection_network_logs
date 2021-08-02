@@ -1,4 +1,4 @@
-connection: "security_logs_next2020"
+connection: "ds-demo-anomaly-detection"
 #thelook_daily_updates
 
 # include all the views
