@@ -353,7 +353,7 @@ dimension: source_country {
 
   measure: anomaly_count {
     type: number
-    sql: round(${count} / 3000) ;;
+    sql: ${count} ;;
     # for demo purposes, we are making the
     # count much smaller than the data that
     # is being generated
