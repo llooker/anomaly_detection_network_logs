@@ -1,5 +1,5 @@
 #connection: "security_logs_next2020"
- connection: "thelook_daily_updates"
+ connection: "looker-private-demo"
 # "ds-demo-anomaly-detection"
 # include all the views
 include: "/views/**/*.view"
