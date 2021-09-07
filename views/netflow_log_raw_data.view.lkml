@@ -1,6 +1,6 @@
 view: netflow_log_raw_data {
-  #sql_table_name: next-demo-2020.network_logs.netflow_log_raw_data_new ;;
-  sql_table_name: `demoanalyticsds.netflow_log_data`;;
+  sql_table_name: `looker-private-demo.anomaly_detection.netflow_log_raw_data` ;;
+  #sql_table_name: `demoanalyticsds.netflow_log_data`;;
 
   dimension_group: partition {
     type: time

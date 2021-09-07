@@ -1,6 +1,7 @@
 view: cluster_model_data {
-  sql_table_name: `demoanalyticsds.cluster_model_data`    ;;
-  # `network_logs.cluster_model_data`
+  sql_table_name: `looker-private-demo.anomaly_detection.cluster_model_data` ;;
+  #`demoanalyticsds.cluster_model_data`
+
 
   dimension: avg_duration {
     type: number

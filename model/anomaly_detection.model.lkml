@@ -1,4 +1,6 @@
-connection: "ds-demo-anomaly-detection"
+#connection: "security_logs_next2020"
+ connection: "thelook_daily_updates"
+# "ds-demo-anomaly-detection"
 # include all the views
 include: "/views/**/*.view"
 include: "/dashboards/*.dashboard"
