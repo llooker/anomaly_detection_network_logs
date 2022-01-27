@@ -119,7 +119,7 @@ view: outlier_data {
     link: {
       label: "Subnet Lookup"
       icon_url: "https://www.looker.com/favicon.ico"
-      url: "/dashboards-next/747?Subnet={{ value | encode_uri }}"
+      url: "/dashboards-next/976?Subnet={{ value | encode_uri }}"
     }
 
   }
