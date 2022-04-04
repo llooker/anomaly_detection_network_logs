@@ -24,7 +24,7 @@ explore: outlier_data {
 explore: netflow_log_raw_data {
   persist_with: real_time
   always_filter: {
-    filters: [netflow_log_raw_data.partition_date: "last 6 days"]
+    filters: [netflow_log_raw_data.partition_date: "last 7 days"]
   }
 }
 
