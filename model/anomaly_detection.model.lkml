@@ -28,6 +28,16 @@ explore: netflow_log_raw_data {
   }
 }
 
+explore: big_search {
+  from: netflow_log_raw_data
+  always_filter: {
+    filters: [big_search.partition_date: "last 7 days"]
+    filters: [big_search.big_search_filter: ""]
+  }
+  sql_always_where: SEARCH(big_search,"`{% parameter big_search.big_search_filter %}`")  ;;
+  #BigSearch uses the above syntax to enable searching all the columns in a table
+}
+
 
 
 

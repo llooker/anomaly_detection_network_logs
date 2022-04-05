@@ -2,6 +2,17 @@ view: netflow_log_raw_data {
   sql_table_name: `looker-private-demo.anomaly_detection.netflow_log_raw_data` ;;
   #sql_table_name: `demoanalyticsds.netflow_log_data`;;
 
+  parameter: big_search_filter {
+    suggestable: no
+    type: unquoted
+  }
+
+  # filter: big_search_filter  {
+  #   suggestable: no
+  #   sql: SEARCH(netflow_log_raw_data,"{% parameter big_search_filter %}")  ;;
+  #   #SEARCH(netflow_log_raw_data, "12.0.9.4")
+  # }
+
   dimension_group: partition {
     type: time
     timeframes: [
@@ -24,6 +35,11 @@ view: netflow_log_raw_data {
     label: "Destination IP"
     type: string
     sql: ${TABLE}.dstIP ;;
+    html:  {% if value == big_search_filter._parameter_value %}
+    <b><p style="color: black; background-color: #FBBC04; font-size:100%">{{ value }}</b></p>
+    {% else %}
+    {{ value }}
+    {% endif %};;
   }
 
   dimension: dst_port {
@@ -31,6 +47,13 @@ view: netflow_log_raw_data {
     type: number
     sql: ${TABLE}.dstPort ;;
     value_format_name: id
+    # BigSearch HTML formatting
+    html:
+    {% if value == big_search_filter._parameter_value %}
+    <b><p style="color: black; background-color: #FBBC04; font-size:100%">{{ value }}</b></p>
+    {% else %}
+    {{ value }}
+    {% endif %};;
   }
 
   dimension_group: end_time {
@@ -61,6 +84,13 @@ view: netflow_log_raw_data {
     label: "Source IP"
     type: string
     sql: ${TABLE}.srcIP ;;
+    # BigSearch HTML formatting
+    html:
+    {% if value == big_search_filter._parameter_value %}
+    <b><p style="color: black; background-color: #FBBC04; font-size:100%">{{ value }}</b></p>
+    {% else %}
+    {{ value }}
+    {% endif %};;
   }
 
   dimension: src_port {
@@ -68,6 +98,13 @@ view: netflow_log_raw_data {
     type: number
     sql: ${TABLE}.srcPort ;;
     value_format_name: id
+    # BigSearch HTML formatting
+    html:
+    {% if value == big_search_filter._parameter_value %}
+    <b><p style="color: black; background-color: #FBBC04; font-size:100%">{{ value }}</b></p>
+    {% else %}
+    {{ value }}
+    {% endif %};;
   }
 
   dimension_group: start_time {
