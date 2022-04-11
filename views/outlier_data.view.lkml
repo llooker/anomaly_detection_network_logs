@@ -308,38 +308,20 @@ dimension: source_country {
         }
       }
     action: {
-      label: "Email Security Team"
+      label: "Feedback Loop - Mark as 'Normal'"
       url: "https://hooks.zapier.com/hooks/catch/1662138/tvc3zj/"
-      icon_url: "http://www.google.com/s2/favicons?domain=www.gmail.com"
-      param: {
-        name: "user_dash_link"
-        value: "https://googlecloud.looker.com/dashboards/559"
-      }
+      icon_url: "https://www.gstatic.com/devrel-devsite/prod/v3e5e49c86560fa1d4115a3867ece7b214786f7f53a4ea5df16ed22c32fc83928/cloud/images/favicons/onecloud/favicon.ico"
       form_param: {
-        name: "Message"
-        type: textarea
-        default: "Hey,
-        Could you check out this anomaly. It occurred at {{ transaction_time_second._rendered_value | date: \"%T\" }} on {{ transaction_time_second._rendered_value | date: \"%b %d, %Y\" }}.
-        Subnet: {{ dst_subnet._value }}
-        Received Bytes: {{ outlier_data.avg_rx_bytes._rendered_value }}  vs. Average Received Bytes for Cluster: {{ normalized_centroid_data.avg_rx_bytes._rendered_value }}
-        Sent Bytes: {{ outlier_data.avg_tx_bytes._rendered_value }} vs. Average Sent Bytes for Cluster: {{ normalized_centroid_data.avg_tx_bytes._rendered_value }}
-        "
-      }
-      form_param: {
-        name: "Recipient"
+        name: "Reason"
         type: select
-        default: "cody"
+        default: "filesize"
         option: {
-          name: "cody"
-          label: "Cody"
+          name: "filesize"
+          label: "Valid File Size"
         }
         option: {
-          name: "masud"
-          label: "Masud"
-        }
-        option: {
-          name: "google_security"
-          label: "Google Security Group"
+          name: "bytes"
+          label: "Valid Bytes Transferred"
         }
       }
     }
