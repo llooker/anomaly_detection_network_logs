@@ -7,13 +7,14 @@
   - title: Log Search
     name: Log Search
     model: anomaly_detection
-    explore: big_search
+    explore: netflow_log_raw_data
     type: looker_grid
-    fields: [big_search.end_time_time, big_search.protocol_name, big_search.src_ip,
-      big_search.src_port, big_search.dst_ip, big_search.dst_port, big_search.bytes_transferred]
+    fields: [netflow_log_raw_data.end_time_time, netflow_log_raw_data.protocol_name,
+      netflow_log_raw_data.src_ip, netflow_log_raw_data.src_port, netflow_log_raw_data.dst_ip,
+      netflow_log_raw_data.dst_port, netflow_log_raw_data.bytes_transferred]
     filters:
-      big_search.partition_date: 2020/09/01 to 2020/09/30
-    sorts: [big_search.end_time_time desc]
+      netflow_log_raw_data.big_search_filter: 12.0.0.5
+    sorts: [netflow_log_raw_data.end_time_time desc]
     limit: 500
     column_limit: 50
     show_view_names: false
@@ -35,44 +36,13 @@
     show_totals: true
     show_row_totals: true
     truncate_header: false
-    series_cell_visualizations:
-      big_search.bytes_transferred:
-        is_active: false
-        value_display: true
-    conditional_formatting: [{type: along a scale..., value: !!null '', background_color: "#29bff3",
-        font_color: !!null '', color_application: {collection_id: create-a-color-collection,
-          palette_id: create-a-color-collection-sequential-0}, bold: false, italic: false,
-        strikethrough: false, fields: [big_search.bytes_transferred]}]
-    x_axis_gridlines: false
-    y_axis_gridlines: true
-    show_y_axis_labels: true
-    show_y_axis_ticks: true
-    y_axis_tick_density: default
-    y_axis_tick_density_custom: 5
-    show_x_axis_label: true
-    show_x_axis_ticks: true
-    y_axis_scale_mode: linear
-    x_axis_reversed: false
-    y_axis_reversed: false
-    plot_size_by_field: false
-    trellis: ''
-    stacking: ''
-    legend_position: center
-    point_style: none
-    show_value_labels: false
-    label_density: 25
-    x_axis_scale: auto
-    y_axis_combined: true
-    show_null_points: true
-    interpolation: linear
     defaults_version: 1
-    series_types: {}
     listen:
-      Big Search Filter: big_search.big_search_filter
+      Partition Date: netflow_log_raw_data.partition_date
     row: 0
     col: 0
     width: 24
-    height: 8
+    height: 9
   filters:
   - name: Big Search Filter
     title: Big Search Filter
@@ -85,9 +55,9 @@
       display: popover
       options: []
     model: anomaly_detection
-    explore: big_search
+    explore: netflow_log_raw_data
     listens_to_filters: []
-    field: big_search.big_search_filter
+    field: netflow_log_raw_data.big_search_filter
   - name: Partition Date
     title: Partition Date
     type: field_filter
