@@ -61,7 +61,7 @@
   - name: Partition Date
     title: Partition Date
     type: field_filter
-    default_value: 2020/09/21 to 2020/10/01
+    default_value: 2020/09/01 to 2020/10/01
     allow_multiple_values: true
     required: false
     ui_config:
