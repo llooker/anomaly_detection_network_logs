@@ -7,12 +7,6 @@ view: netflow_log_raw_data {
     type: unquoted
   }
 
-  # filter: big_search_filter  {
-  #   suggestable: no
-  #   sql: SEARCH(netflow_log_raw_data,"{% parameter big_search_filter %}")  ;;
-  #   #SEARCH(netflow_log_raw_data, "12.0.9.4")
-  # }
-
   dimension_group: partition {
     type: time
     timeframes: [

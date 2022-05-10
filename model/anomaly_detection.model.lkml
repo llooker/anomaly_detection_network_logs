@@ -26,17 +26,27 @@ explore: netflow_log_raw_data {
   always_filter: {
     filters: [netflow_log_raw_data.partition_date: "last 7 days"]
   }
+
+  # for BigSearch filter - the below syntax applies the correct BQ syntax, but only if the filter is being used in the query
+  sql_always_where:
+    {% if netflow_log_raw_data.big_search_filter._in_query %}
+    SEARCH(netflow_log_raw_data,"`{% parameter netflow_log_raw_data.big_search_filter %}`")
+    {% else %}
+    1=1
+    {% endif %} ;;
 }
 
-explore: big_search {
-  from: netflow_log_raw_data
-  always_filter: {
-    filters: [big_search.partition_date: "last 7 days"]
-    filters: [big_search.big_search_filter: ""]
-  }
-  sql_always_where: SEARCH(big_search,"`{% parameter big_search.big_search_filter %}`")  ;;
-  #BigSearch uses the above syntax to enable searching all the columns in a table
-}
+
+
+
+
+
+
+
+
+
+
+
 
 
 
